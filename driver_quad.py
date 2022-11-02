@@ -3,8 +3,8 @@ import time
 from time import sleep
 GPIO.setmode (GPIO.BCM)
 
-f1 = 1000
-f2 = 2000
+f1 = 100
+f2 = 200
 t1 = 1/f1
 t2 = 1/f2
 
@@ -69,31 +69,38 @@ prevTime2 = time.time()
 prevTime1q = prevTime1 + t1/4
 prevTime2q = prevTime2 + t2/4
 
+inphase1 = True
+inphase2 = True
 
 try:
 	while True:
 		currTime = time.time()
 		print((prevTime1q-prevTime1)*1000)
-		if currTime - prevTime1 >= t1/2:
-			# toggle gpio1
-			p1state = togglep1(p1state)
-			prevTime1 = currTime
-
-		if currTime - prevTime1q >= t1/2:
-			# toggle gpio1q
-			p1qstate = togglep1q(p1qstate)
-			prevTime1q = currTime
-
-		if currTime - prevTime2 >= t2/2:
-			# toggle gpio2
-			p2state = togglep2(p2state)
-			prevTime2 = currTime
-
 		
-		if currTime - prevTime2q >= t2/2:
-			# toggle gpio2q
-			p2qstate = togglep2q(p2qstate)
-			prevTime2q = currTime
+		if inphase1:
+			if currTime - prevTime1 >= t1/2:
+				# toggle gpio1
+				p1state = togglep1(p1state)
+				prevTime1 = currTime
+				inphase1 = False
+		else:
+			if currTime - prevTime1q >= t1/2:
+				# toggle gpio1q
+				p1qstate = togglep1q(p1qstate)
+				prevTime1q = currTime
+				inphase1 = True
+		if inphase2:
+			if currTime - prevTime2 >= t2/2:
+				# toggle gpio2
+				p2state = togglep2(p2state)
+				prevTime2 = currTime
+				inphase2 = False
+		else:	
+			if currTime - prevTime2q >= t2/2:
+				# toggle gpio2q
+				p2qstate = togglep2q(p2qstate)
+				prevTime2q = currTime
+				inphase2 = True
 
 
 
