@@ -40,14 +40,14 @@ def init_pins():
 	GPIO.output(20, 0)
 	GPIO.setup(16, GPIO.OUT)
 	GPIO.output(16, 0)
+	GPIO.setup(2, GPIO.OUT)
+	GPIO.output(2, 0)
 	GPIO.setup(3, GPIO.OUT)
 	GPIO.output(3, 0)
-	GPIO.setup(5, GPIO.OUT)
-	GPIO.output(5, 0)
-	GPIO.setup(7, GPIO.OUT)
-	GPIO.output(7, 0)
-	GPIO.setup(11, GPIO.OUT)
-	GPIO.output(11, 0)
+	GPIO.setup(4, GPIO.OUT)
+	GPIO.output(4, 0)
+	GPIO.setup(17, GPIO.OUT)
+	GPIO.output(17, 0)
 
 def togglep1(p1state):
 	p1state = not p1state
@@ -67,19 +67,19 @@ def togglep4(p4state):
 	return p4state
 def togglep5(p5state):
 	p5state = not p5state
-	GPIO.output(3, p5state)
+	GPIO.output(2, p5state)
 	return p5state
 def togglep6(p6state):
 	p6state = not p6state
-	GPIO.output(5, p6state)
+	GPIO.output(3, p6state)
 	return p6state
 def togglep7(p7state):
 	p7state = not p7state
-	GPIO.output(7, p7state)
+	GPIO.output(4, p7state)
 	return p7state
 def togglep8(p8state):
 	p8state = not p8state
-	GPIO.output(11, p8state)
+	GPIO.output(17, p8state)
 	return p8state
 
 init_pins()
