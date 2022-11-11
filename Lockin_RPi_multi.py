@@ -17,8 +17,11 @@ import sys
 
 F_ref_1 = int(sys.argv[1])
 F_ref_2 = int(sys.argv[2])
-print("Reference Frequencies Provided = ", F_ref_1," ", F_ref_2, "Hz")
-
+print("--------------------Lock-In Amplifier-----------------")
+print("Parameters Used:")
+print("Reference Frequencies Provided = ", F_ref_1,"Hz ", F_ref_2, "Hz")
+print("Buffer Length = ", buffer_len)
+print("Acquire Avg Length = ", avg_len)
 print("SPI Initializing ...")
 bus = 0
 device = 0
@@ -27,6 +30,7 @@ spi.open(bus,device)
 spi.max_speed_hz = 4000000
 spi.mode = 0
 
+print("----------------------Lock-In Start-------------------")
 def readadc(adcnum):
 	if adcnum>7 or adcnum<0:
 		return -1
@@ -71,7 +75,7 @@ while True:
 		t = np.linspace(0, N/Fs, N, endpoint=False)
 		k1 = 1.0/(4*F_ref_1)
 		s_n_1 = np.sin(2*np.pi*F_ref_1*t)
-		c_n_1 = np.sin(2*np.pi*F_ref_1*(t + k))
+		c_n_1 = np.sin(2*np.pi*F_ref_1*(t + k1))
 		rxs_1 = a * s_n_1
 		rxc_1 = a * c_n_1
 		I_n_1 = np.mean(rxs_1)      # In-phase
@@ -80,7 +84,7 @@ while True:
 			
 		k2 = 1.0/(4*F_ref_2)
 		s_n_2 = np.sin(2*np.pi*F_ref_2*t)
-		c_n_2 = np.sin(2*np.pi*F_ref_2*(t + k))
+		c_n_2 = np.sin(2*np.pi*F_ref_2*(t + k2))
 		rxs_2 = a * s_n_2
 		rxc_2 = a * c_n_2
 		I_n_2 = np.mean(rxs_2)      # In-phase
@@ -93,4 +97,4 @@ while True:
 		sum1 = sum1 + V_1
 		sum2 = sum2 + V_2
 	
-	print("Lock-in R = (", F_ref_1, ") ", int(sum1/avg_len)," (", F_ref_2, ") ",int(sum2/avg_len), "uV")
+	print("Lock-in R = (", F_ref_1, "Hz) ", int(sum1/avg_len)," (", F_ref_2, "Hz) ",int(sum2/avg_len), "uV")
