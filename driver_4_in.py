@@ -3,10 +3,10 @@ import time
 from time import sleep
 GPIO.setmode (GPIO.BCM)
 
-f1 = 1000
-f2 = 2000
-f3 = 1000
-f4 = 700
+f1 = 1300
+f2 = 550
+f3 = 1300
+f4 = 550
 
 t1 = 1/f1
 t2 = 1/f2
